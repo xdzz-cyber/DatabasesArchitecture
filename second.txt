@@ -1,0 +1,4 @@
+use TEST
+show collections
+db.organization.find({_id: ObjectId("21fdfd33f3f3f33f3"),"name":""first})
+db.find().pretty()
