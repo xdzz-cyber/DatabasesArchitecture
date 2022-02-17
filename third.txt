@@ -1,0 +1,33 @@
+INSERT EXAMPLE
+db.deanery.insert({"StudyGroupCode":"ipz-21", "Course":"1", "StudentsQuantity":"50", "TotalStudyHours":"60", "teacher":{"FullName":"Andrew Yoku", "TypeOfMonitoring":"lecture", "Date":new Date()},"Subject":{"Name":"SQL","Category":"Information Technologies", "SubjectTotalHours":"20"}})
+
+FIND COMMANDS GO BELOW
+db.deanery.find({Course:"2"}).pretty()
+db.deanery.find({Course:"1",Field:null}).pretty()
+db.deanery.find({Course:"1"},{Subject:1}).pretty()
+db.deanery.find({Course:"1"},{Subject:0}).pretty()
+
+FIND WITH REGULAR EXPRESSIONS
+db.deanery.find({StudyGroupCode:/\d/i}).pretty()
+
+USING LIMIT
+db.deanery.find({StudyGroupCode:/\d/i}).limit(1).pretty()
+
+USING SKIP
+db.deanery.find({StudyGroupCode:/\d/i}).skip(2).pretty()
+
+
+USING SORT
+db.deanery.find({StudyGroupCode:/\d/i}).sort({StudentQuantity:-1}).pretty()
+
+USING SKIP + SORT
+db.deanery.find({StudyGroupCode:/\d/i}).sort({StudentQuantity:-1}).skip(1).pretty()
+
+USING findOne
+db.deanery.findOne({Course:"2"})
+
+USING $natural
+db.deanery.find({StudyGroupCode:/\d/i}).sort({$natural:-1}).pretty()
+
+USING SLICE
+db.deanery.find({StudyGroupCode:/\d/i}, {someArray:{$slice:1}}).sort({$natural:-1}).pretty()
