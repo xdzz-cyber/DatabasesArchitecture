@@ -1,0 +1,8 @@
+first query
+db.deanery.aggregate({$group:{_id:null, sum:{$sum:"$StudentsQuantity"}}});
+second query
+db.deanery.find({"StudentsQuantity":{$gt:40}})
+third query
+db.deanery.find({"Course":1,$and:[{"TotalStudyHours":{$lt:70}}]})
+fourth query
+db.deanery.find({"teacher":{$size:2}},{"teacher":1}).forEach(function(data) {printjson(data)})
