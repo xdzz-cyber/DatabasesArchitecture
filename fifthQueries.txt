@@ -1,0 +1,22 @@
+Replace one query
+db.deanery.replaceOne({Course:4}, {Course:5})
+Update one query
+db.deanery.updateOne({Course:5}, {$set:{Course:7}})
+Update many query
+db.deanery.updateMany({Course:7}, {$set:{Course:8}})
+Unset by one field
+db.deanery.updateOne({Course:8}, {$unset:{Course:8}})
+Push to the array
+db.deanery.updateOne({StudentsQuantity:35}, {$push:{Subjects:{Name:"English",Category:"Foreign languages", SubjectTotalHours:25}}})
+Add to set query
+db.deanery.updateOne({StudentsQuantity:35}, {$addToSet:{Subjects:{Name:"English",Category:"Foreign languages", SubjectTotalHours:25}}})
+Pop data query
+db.deanery.updateOne({Course : 2}, {$pop: {Subjects: 1}})
+Pull from deanery
+db.deanery.updateOne({Course : 2}, {$pull: {Subjects: {Name:"OOKP"}}})
+Delete one
+db.users.deleteOne({StudyGroupCode : "ipz-23"})
+Delete many
+db.users.deleteOne({StudyGroupCode : "ipz-23"})
+Drop database
+db.deanery.drop()
