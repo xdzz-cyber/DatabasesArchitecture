@@ -1,0 +1,4 @@
+db.deanery.createIndex({"_id":1})
+db.deanery.createIndex({"StudyGroupCode":1}, {"unique":true})
+
+db.deanery.getIndexes()
