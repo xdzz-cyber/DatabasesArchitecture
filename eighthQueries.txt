@@ -1,0 +1,16 @@
+db.deanery.insertOne({
+    "Course": 2,
+    "StudentsQuantity": 20,
+    "Teachers":[{
+    "Date": Date(),
+    "TeacherId": {"$ref": "teachers", "$id": ObjectId("62769bd6a193e049ef5a6033")},
+    "TypeOfMonitoringId" : {"$ref" : "types_of_monitorings", "$id" : ObjectId("62769a9ea193e049ef5a6030")}
+    }],
+    "StudyGroupCode": "ipz-21",
+    "Subjects":[{"$ref" : "subjects", "$id": ObjectId("62769a3ea193e049ef5a602d")}],
+    "TotalStudyHours": 75,
+    "SuperVisorId":{
+        "$ref": "SuperVisor",
+        "$id": ObjectId("6262cdca2d10600e8f93fcbb")
+    }
+})
