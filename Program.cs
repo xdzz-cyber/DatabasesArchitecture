@@ -2,6 +2,7 @@ using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
+using MongoDbForDbArchitecture.Models;
 
 IConfigurationBuilder builder = new ConfigurationBuilder()
     .SetBasePath(AppContext.BaseDirectory)
@@ -10,28 +11,22 @@ var config = builder.Build();
 
 string? connectionString = config.GetConnectionString("DefaultConnection");
 MongoClient client = new MongoClient(connectionString);
-IMongoDatabase database = client.GetDatabase("deanery");
+IMongoCollection<BsonDocument> supervisors = client.GetDatabase("TEST").GetCollection<BsonDocument>("supervisors");
 
 GetDatabaseNames(client).GetAwaiter();
 Console.ReadLine();
 
-GetCollectionsNames(client).GetAwaiter();
+GetCollections(client).GetAwaiter();
 Console.ReadLine();
 
-Console.WriteLine(new Person("aga").ToJson());
-Console.ReadLine();
+var supervisorsList = supervisors.Find(new BsonDocument()).ToList();
 
-BsonDocument bsonDocument = new BsonDocument
-{
-    {"Name","Aga"}
-};
+SuperVisor sp = BsonSerializer.Deserialize<SuperVisor>(supervisorsList.First());
+BsonDocument spBson = sp.ToBsonDocument();
 
-Person p = BsonSerializer.Deserialize<Person>(bsonDocument);
-Console.WriteLine(p.ToJson());
+Console.WriteLine(sp.ToJson());
+Console.WriteLine(spBson);
 
-Person p2 = new Person("First");
-BsonDocument bsonDocument2 = p2.ToBsonDocument();
-Console.WriteLine(bsonDocument2);
 
 static async Task GetDatabaseNames(MongoClient client)
 {
@@ -45,7 +40,7 @@ static async Task GetDatabaseNames(MongoClient client)
     }
 }
 
-static async Task GetCollectionsNames(MongoClient client)
+static async Task GetCollections(MongoClient client)
 {
     using (var cursor = await client.ListDatabasesAsync())
     {
@@ -65,12 +60,4 @@ static async Task GetCollectionsNames(MongoClient client)
             Console.WriteLine();
         }
     }
-}
-
-class Person
-{
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-
-    public Person(string name) => (Id, Name) = (Guid.NewGuid(), name);
 }
