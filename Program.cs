@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
@@ -12,26 +12,26 @@ string? connectionString = config.GetConnectionString("DefaultConnection");
 MongoClient client = new MongoClient(connectionString);
 IMongoDatabase database = client.GetDatabase("deanery");
 
-// GetDatabaseNames(client).GetAwaiter();
-// Console.ReadLine();
+GetDatabaseNames(client).GetAwaiter();
+Console.ReadLine();
 
-// GetCollectionsNames(client).GetAwaiter();
-// Console.ReadLine();
+GetCollectionsNames(client).GetAwaiter();
+Console.ReadLine();
 
-// Console.WriteLine(new Person("aga").ToJson());
-// Console.ReadLine();
+Console.WriteLine(new Person("aga").ToJson());
+Console.ReadLine();
 
-// BsonDocument bsonDocument = new BsonDocument
-// {
-//     {"Name","Aga"}
-// };
-//
-// Person p = BsonSerializer.Deserialize<Person>(bsonDocument);
-// Console.WriteLine(p.ToJson());
+BsonDocument bsonDocument = new BsonDocument
+{
+    {"Name","Aga"}
+};
 
-Person p = new Person("First");
-BsonDocument bsonDocument = p.ToBsonDocument();
-Console.WriteLine(bsonDocument);
+Person p = BsonSerializer.Deserialize<Person>(bsonDocument);
+Console.WriteLine(p.ToJson());
+
+Person p2 = new Person("First");
+BsonDocument bsonDocument2 = p2.ToBsonDocument();
+Console.WriteLine(bsonDocument2);
 
 static async Task GetDatabaseNames(MongoClient client)
 {
@@ -73,9 +73,4 @@ class Person
     public string Name { get; set; }
 
     public Person(string name) => (Id, Name) = (Guid.NewGuid(), name);
-
-    // public override string ToString()
-    // {
-    //     return $"Id-{Id};Name={Name}";
-    // }
 }
